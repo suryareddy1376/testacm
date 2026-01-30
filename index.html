@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KARE ACM SIGBED | Student Chapter</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Security Notice Banner -->
+    <div class="security-notice">
+        <h4><i class="fas fa-shield-alt"></i> Security Notice:</h4>
+        <p>Your IP address is being logged for security, audit and compliance purposes.</p>
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="header-top">
+            <div class="container">
+                <div class="logo-section">
+                    <img src="https://sis.kalasalingam.ac.in/images/kare_logo.png" alt="KARE Logo" class="kare-logo">
+                    <div class="logo-text">
+                        <span class="tamil-text">கலசலிங்கம்</span>
+                        <span class="english-text">Kalasalingam Academy of Research & Education</span>
+                    </div>
+                </div>
+                <div class="header-controls">
+                    <button class="dark-mode-toggle" id="darkModeToggle">
+                        <i class="fas fa-moon"></i> Dark
+                    </button>
+                </div>
+            </div>
+        </div>
+        <nav class="main-nav">
+            <div class="container">
+                <div class="nav-brand">
+                    <img src="images/kare-acm-sigbed-logo.png" alt="KARE ACM SIGBED Logo" class="nav-logo">
+                    <div class="brand-text">
+                        <span class="brand-title">KARE ACM SIGBED | Student Chapter</span>
+                        <span class="brand-tagline">Empowering Embedded Systems Research</span>
+                    </div>
+                </div>
+                <button class="mobile-menu-toggle" id="mobileMenuToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="index.html" class="active">Home</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle">About Us <i class="fas fa-chevron-down"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="history.html">History</a></li>
+                            <li><a href="team.html">Our Team</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle">Media <i class="fas fa-chevron-down"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">News</a></li>
+                            <li><a href="#">Gallery</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="recruitment.html" class="recruitment-link"><i class="fas fa-user-plus"></i> Recruitment</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle">Connect <i class="fas fa-chevron-down"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Contact Us</a></li>
+                            <li><a href="#">Feedback</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section with Slider -->
+    <section class="hero-section" id="home">
+        <div class="hero-slider">
+            <div class="slide active">
+                <img src="https://karesgbd.acm.org/wp-content/uploads/2025/12/Website-Herobar-scaled.jpg" alt="KARE ACM SIGBED Hero Banner">
+            </div>
+            <div class="slide">
+                <img src="https://karesgbd.acm.org/wp-content/uploads/2025/12/2026.jpeg" alt="KARE ACM SIGBED 2026">
+            </div>
+            <div class="slide">
+                <img src="https://karesgbd.acm.org/wp-content/uploads/2025/12/DigiCon3.0.jpg" alt="DigiCon 3.0">
+            </div>
+            <div class="slide">
+                <img src="https://karesgbd.acm.org/wp-content/uploads/2026/01/Pongal-2026-Banner.jpeg" alt="Pongal 2026">
+            </div>
+        </div>
+        <div class="slider-controls">
+            <button class="slider-btn prev-btn"><i class="fas fa-chevron-left"></i></button>
+            <div class="slider-dots"></div>
+            <button class="slider-btn next-btn"><i class="fas fa-chevron-right"></i></button>
+        </div>
+    </section>
+
+    <!-- Announcement Ticker -->
+    <section class="announcement-section">
+        <div class="container">
+            <button class="pause-btn" id="pauseAnnouncement">
+                <i class="fas fa-pause"></i> Pause Announcements
+            </button>
+            <div class="announcement-ticker">
+                <div class="ticker-content">
+                    <a href="recruitment.html">
+                        <i class="fas fa-bullhorn"></i> Developer Recruitment 2026 – Applications Now Open! Join KARE ACM SIGBED
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Chapter Representatives Section -->
+    <section class="representatives-section" id="about">
+        <div class="container">
+            <h2 class="section-title">Chapter Representatives</h2>
+            <div class="representatives-grid">
+                <div class="representative-card">
+                    <div class="rep-image">
+                        <img src="https://karesgbd.acm.org/wp-content/uploads/2025/07/Dr.Munneswaran.V.jpg" alt="Dr. Muneeswaran V">
+                    </div>
+                    <div class="rep-info">
+                        <h3>Dr. Muneeswaran V</h3>
+                        <p>Faculty Sponsor – ACM SIGBED, KARE</p>
+                        <div class="social-links">
+                            <a href="https://www.linkedin.com/in/drmunneeswaran" target="_blank"><i class="fab fa-linkedin"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="representative-card">
+                    <div class="rep-image">
+                        <img src="https://karesgbd.acm.org/wp-content/uploads/2025/07/Dr.PKM-ECE-FCACM-SiGBED.jpg" alt="Dr. P Manikandan">
+                    </div>
+                    <div class="rep-info">
+                        <h3>Dr. P Manikandan</h3>
+                        <p>Faculty Coordinator – ACM SIGBED, KARE</p>
+                    </div>
+                </div>
+                <div class="representative-card">
+                    <div class="rep-image">
+                        <img src="https://karesgbd.acm.org/wp-content/uploads/2025/07/Chaiperson-SS.jpg" alt="Sai Siddardha Davuluri">
+                    </div>
+                    <div class="rep-info">
+                        <h3>Mr. Sai Siddardha Davuluri</h3>
+                        <p>Chairperson – ACM SIGBED, KARE</p>
+                        <div class="social-links">
+                            <a href="https://www.linkedin.com/in/sai-siddardha" target="_blank"><i class="fab fa-linkedin"></i></a>
+                            <a href="https://instagram.com/sai.siddardha" target="_blank"><i class="fab fa-instagram"></i></a>
+                            <a href="https://github.com/saisiddardha" target="_blank"><i class="fab fa-github"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about-section">
+        <div class="container">
+            <h2 class="section-title">About KARE SIGBED ACM</h2>
+            <div class="about-grid">
+                <div class="about-card">
+                    <h3>About ACM SIGBED</h3>
+                    <div class="about-content">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Association_for_Computing_Machinery_%28ACM%29_logo.svg/2048px-Association_for_Computing_Machinery_%28ACM%29_logo.svg.png" alt="ACM Logo" class="about-logo">
+                        <p>ACM SIGBED (Special Interest Group on Embedded Systems) is a professional community dedicated to embedded and cyber-physical systems. SIGBED provides a vibrant platform for researchers, practitioners, and students to explore the fascinating world of embedded systems, real-time computing, and IoT technologies. The group organizes conferences, workshops, and publications that advance the state-of-the-art in embedded systems design, analysis, and applications. SIGBED's mission is to foster collaboration, knowledge sharing, and innovation in the embedded systems domain.</p>
+                    </div>
+                </div>
+                <div class="about-card">
+                    <h3>About KARE ACM SIGBED Student Chapter</h3>
+                    <div class="about-content">
+                        <img src="images/kare-acm-sigbed-logo.png" alt="KARE ACM SIGBED Logo" class="about-logo">
+                        <p>The KARE ACM SIGBED Student Chapter is an official student chapter of ACM SIGBED, established at Kalasalingam Academy of Research and Education. Our chapter emphasizes technical innovation, mentorship, and real-world applications aligned with the global SIGBED mission. We provide students with opportunities to engage in hands-on learning, research projects, and professional development activities.</p>
+                        <p>Our core focus: hands-on tutorials, project showcases, expert lectures, and collaborative engagement in embedded and real-time systems. Through workshops, technical sessions, hackathons, and competitions, we aim to bridge the gap between academic knowledge and industry requirements, preparing our members for successful careers in embedded systems and related fields.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- News and Calendar Section -->
+    <section class="news-calendar-section" id="media">
+        <div class="container">
+            <div class="news-calendar-grid">
+                <!-- News Section -->
+                <div class="news-section">
+                    <h2 class="section-title">KARE ACM SIGBED News</h2>
+                    <p class="section-subtitle">Our achievements, news, alerts of the student chapter. Stay updated with the latest events, workshops, and activities from KARE ACM SIGBED Student Chapter.</p>
+                    <div class="social-follow">
+                        <a href="https://www.linkedin.com/company/kare-acm-sigbed" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn</a>
+                        <a href="https://www.instagram.com/kare_acm_sigbed" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
+                    </div>
+                    <div class="news-slider">
+                        <div class="news-slide active">
+                            <img src="https://karesgbd.acm.org/wp-content/uploads/2025/11/ROUND-2-Digicon.jpg" alt="DigiCon Hackathon Round 2">
+                            <div class="news-info">
+                                <span class="news-date">27 Oct 2025</span>
+                                <h4>DigiCon Hackathon Round 2</h4>
+                                <p>Reported / Source: KARE ACM SIGBED</p>
+                            </div>
+                        </div>
+                        <div class="news-slide">
+                            <img src="https://karesgbd.acm.org/wp-content/uploads/2025/10/Gandhi-jayanthi-2025.png" alt="Gandhi Jayanti 2025">
+                            <div class="news-info">
+                                <span class="news-date">02 Oct 2025</span>
+                                <h4>Gandhi Jayanti 2025</h4>
+                                <p>Reported / Source: Web Development Division</p>
+                            </div>
+                        </div>
+                        <div class="news-slide">
+                            <img src="https://karesgbd.acm.org/wp-content/uploads/2025/09/TREASURE-HUNT-PNG.png" alt="Treasure Hunt">
+                            <div class="news-info">
+                                <span class="news-date">15 Sep 2025</span>
+                                <h4>Treasure Hunt – Non Technical</h4>
+                                <p>Reported / Source: Web Development Division</p>
+                            </div>
+                        </div>
+                        <div class="news-slide">
+                            <img src="https://karesgbd.acm.org/wp-content/uploads/2025/09/KARE-Onam.png" alt="Onam">
+                            <div class="news-info">
+                                <span class="news-date">06 Sep 2025</span>
+                                <h4>Onam Wishes from KARE ACM SigBED</h4>
+                                <p>Reported / Source: Public Relations Team</p>
+                            </div>
+                        </div>
+                        <div class="news-slide">
+                            <img src="https://karesgbd.acm.org/wp-content/uploads/2025/07/Inauguration-Poster.png" alt="Inauguration">
+                            <div class="news-info">
+                                <span class="news-date">14 July 2025</span>
+                                <h4>SiGBED KARE Student Chapter Inauguration</h4>
+                                <p>Reported / Source: Nischal S Tumbeti</p>
+                            </div>
+                        </div>
+                        <div class="news-slide">
+                            <img src="https://karesgbd.acm.org/wp-content/uploads/2025/07/GI-Poster.png" alt="Grand Inauguration">
+                            <div class="news-info">
+                                <span class="news-date">19 June 2025</span>
+                                <h4>Grand Inauguration of KARE ACM SIGBED</h4>
+                                <p>Reported / Source: Public Relations Team</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="news-controls">
+                        <button class="news-btn prev-news"><i class="fas fa-chevron-left"></i></button>
+                        <button class="news-btn next-news"><i class="fas fa-chevron-right"></i></button>
+                    </div>
+                </div>
+
+                <!-- Calendar Section -->
+                <div class="calendar-section">
+                    <h3 class="calendar-title">Calendar</h3>
+                    <h4 class="calendar-month">JANUARY 2026</h4>
+                    <div class="calendar-grid">
+                        <div class="calendar-header">
+                            <span>SUN</span>
+                            <span>MON</span>
+                            <span>TUE</span>
+                            <span>WED</span>
+                            <span>THU</span>
+                            <span>FRI</span>
+                            <span>SAT</span>
+                        </div>
+                        <div class="calendar-body" id="calendarBody">
+                            <!-- Calendar days will be generated by JavaScript -->
+                        </div>
+                    </div>
+                    <div class="calendar-legend">
+                        <span class="legend-item"><span class="legend-color holiday"></span> Holiday</span>
+                        <span class="legend-item"><span class="legend-color event"></span> Event</span>
+                        <span class="legend-item"><span class="legend-color weekly-holiday"></span> Weekly Holiday</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- We Offer Section -->
+    <section class="we-offer-section">
+        <div class="container">
+            <h2 class="section-title">We offer</h2>
+            <div class="offers-grid">
+                <div class="offer-card">
+                    <div class="offer-icon"><i class="fas fa-graduation-cap"></i></div>
+                    <h3>Education</h3>
+                    <p>Academic programs and courses</p>
+                </div>
+                <div class="offer-card">
+                    <div class="offer-icon"><i class="fas fa-users"></i></div>
+                    <h3>Community</h3>
+                    <p>Join our student community</p>
+                </div>
+                <div class="offer-card">
+                    <div class="offer-icon"><i class="fas fa-project-diagram"></i></div>
+                    <h3>Projects</h3>
+                    <p>Innovative tech projects</p>
+                </div>
+                <div class="offer-card">
+                    <div class="offer-icon"><i class="fas fa-calendar-alt"></i></div>
+                    <h3>Events</h3>
+                    <p>Workshops and conferences</p>
+                </div>
+                <div class="offer-card">
+                    <div class="offer-icon"><i class="fas fa-book"></i></div>
+                    <h3>Resources</h3>
+                    <p>Learning materials and docs</p>
+                </div>
+                <div class="offer-card">
+                    <div class="offer-icon"><i class="fas fa-trophy"></i></div>
+                    <h3>Achievements</h3>
+                    <p>Awards and recognition</p>
+                </div>
+                <div class="offer-card">
+                    <div class="offer-icon"><i class="fas fa-handshake"></i></div>
+                    <h3>Partnerships</h3>
+                    <p>Industry collaborations</p>
+                </div>
+                <div class="offer-card">
+                    <div class="offer-icon"><i class="fas fa-lightbulb"></i></div>
+                    <h3>Innovation</h3>
+                    <p>Research and development</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials-section">
+        <div class="container">
+            <h2 class="section-title">KARE Student Chapterians</h2>
+            <span class="testimonial-label">TESTIMONIAL</span>
+            <div class="testimonials-slider">
+                <div class="testimonial-slide active">
+                    <div class="testimonial-content">
+                        <img src="https://edu.kalasalingam.ac.in/images/kare_logo.png" alt="KARE Logo" class="testimonial-logo">
+                        <h4>Kalasalingam Academy of Research and Education</h4>
+                        <span class="dept">ACM SiGBED</span>
+                        <p class="quote">We are happy to be part of ACM SiGBED</p>
+                        <span class="author">– KARE ACM SiGBED | Student Chapter</span>
+                    </div>
+                </div>
+                <div class="testimonial-slide">
+                    <div class="testimonial-content">
+                        <img src="https://karesgbd.acm.org/wp-content/uploads/2025/09/SJCA.jpg" alt="Ms. Selva Jotheha C A" class="testimonial-photo">
+                        <img src="https://edu.kalasalingam.ac.in/images/kare_logo.png" alt="KARE Logo" class="testimonial-logo-small">
+                        <h4>Kalasalingam Academy of Research and Education</h4>
+                        <span class="dept">Department of Electronics & Communications</span>
+                        <p class="quote">I've learned a lot while helping organize events that brought students together to explore and grow in embedded systems.</p>
+                        <span class="author">– Secretary | Ms. Selva Jotheha C A</span>
+                    </div>
+                </div>
+                <div class="testimonial-slide">
+                    <div class="testimonial-content">
+                        <img src="https://karesgbd.acm.org/wp-content/uploads/2025/09/Nischal-WiM.png" alt="Mr. Nischal S Tumbeti" class="testimonial-photo">
+                        <img src="https://edu.kalasalingam.ac.in/images/kare_logo.png" alt="KARE Logo" class="testimonial-logo-small">
+                        <h4>Kalasalingam Academy of Research & Education</h4>
+                        <span class="dept">Department of Computer Science</span>
+                        <p class="quote">Proud to lead the digital presence Bridging technology and community through dynamic, user focused platforms. Empowering students with every click and connection</p>
+                        <span class="author">– Web Information Manager | Mr. Nischal S Tumbeti</span>
+                    </div>
+                </div>
+                <div class="testimonial-slide">
+                    <div class="testimonial-content">
+                        <img src="https://karesgbd.acm.org/wp-content/uploads/2025/07/BNR-PR-Team.png" alt="Mr. Neelakanteswar Reddy B" class="testimonial-photo">
+                        <img src="https://edu.kalasalingam.ac.in/images/kare_logo.png" alt="KARE Logo" class="testimonial-logo-small">
+                        <h4>Kalasalingam Academy of Research & Education</h4>
+                        <span class="dept">Department of Electronics & Communication</span>
+                        <p class="quote">Being part of the PR team helped me build confidence and contribute meaningfully to the chapter. It taught me how communication can bring people together.</p>
+                        <span class="author">– Public Relation Team | Mr.Neelakanteswar Reddy B</span>
+                    </div>
+                </div>
+                <div class="testimonial-slide">
+                    <div class="testimonial-content">
+                        <img src="https://karesgbd.acm.org/wp-content/uploads/2025/10/M-Varshitha.jpg" alt="Ms. Varshitha Mallela" class="testimonial-photo">
+                        <img src="https://edu.kalasalingam.ac.in/images/kare_logo.png" alt="KARE Logo" class="testimonial-logo-small">
+                        <h4>Kalasalingam Academy of Research & Education</h4>
+                        <span class="dept">Department of Electronics & Communication</span>
+                        <p class="quote">As a member of the Web Development Team at KARE ACM SIGBED, I turn ideas into interactive experiences. This role has helped me grow both technically and creatively while contributing to something meaningful.</p>
+                        <span class="author">– Web Development Team | Ms. Varshitha Mallela</span>
+                    </div>
+                </div>
+                <div class="testimonial-slide">
+                    <div class="testimonial-content">
+                        <img src="https://karesgbd.acm.org/wp-content/uploads/2025/07/GH-PRTeam.jpg" alt="Ms. Harshitha Guduri" class="testimonial-photo">
+                        <img src="https://edu.kalasalingam.ac.in/images/kare_logo.png" alt="KARE Logo" class="testimonial-logo-small">
+                        <h4>Kalasalingam Academy of Research & Education</h4>
+                        <span class="dept">Department of Electronics & Communication</span>
+                        <p class="quote">Joining the PR Team of the newly formed KARE ACM SIGBED chapter gave me the chance to work on something impactful right from the start. While I enjoy telling our story and reaching people, I am equally passionate about areas like Embedded Systems, AI and Cybersecurity and I look forward to exploring those paths through this platform.</p>
+                        <span class="author">– PR & Outreach Team | Ms.Harshitha Guduri</span>
+                    </div>
+                </div>
+                <div class="testimonial-slide">
+                    <div class="testimonial-content">
+                        <img src="https://karesgbd.acm.org/wp-content/uploads/2025/07/Santosh.jpg" alt="Mr. Santosh Kumar G" class="testimonial-photo">
+                        <img src="https://edu.kalasalingam.ac.in/images/kare_logo.png" alt="KARE Logo" class="testimonial-logo-small">
+                        <h4>Kalasalingam Academy of Research & Education</h4>
+                        <span class="dept">Department of Computer Science</span>
+                        <p class="quote">It gave me the opportunity to organize events that mattered.</p>
+                        <span class="author">– Web Development Team | Mr. Santosh Kumar G</span>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-controls">
+                <button class="testimonial-btn prev-testimonial"><i class="fas fa-chevron-left"></i></button>
+                <button class="testimonial-btn next-testimonial"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Partner Links Section -->
+    <section class="partners-section" id="connect">
+        <div class="container">
+            <div class="partners-grid">
+                <a href="https://kalasalingam.ac.in/" target="_blank" class="partner-link">
+                    <span>Kalasalingam Academy of Research and Education</span>
+                    <i class="fas fa-external-link-alt"></i>
+                </a>
+                <a href="https://www.acm.org/" target="_blank" class="partner-link">
+                    <span>Association for Computing Machinery</span>
+                    <i class="fas fa-external-link-alt"></i>
+                </a>
+                <a href="#" class="partner-link">
+                    <span>KARE ACM SIGBED Student Chapter</span>
+                    <i class="fas fa-external-link-alt"></i>
+                </a>
+                <a href="https://sigbed.org/" target="_blank" class="partner-link">
+                    <span>ACM SIGBED</span>
+                    <i class="fas fa-external-link-alt"></i>
+                </a>
+                <a href="https://sis.kalasalingam.ac.in/" target="_blank" class="partner-link">
+                    <span>KARE Student Information System</span>
+                    <i class="fas fa-external-link-alt"></i>
+                </a>
+                <a href="https://edu.kalasalingam.ac.in/" target="_blank" class="partner-link">
+                    <span>KARE Education Portal</span>
+                    <i class="fas fa-external-link-alt"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-section useful-links">
+                    <h4>Useful Links</h4>
+                    <ul>
+                        <li><a href="#">About This Website</a></li>
+                        <li><a href="#">Website Policies</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">Feedback</a></li>
+                        <li><a href="team.html">Web Information Manager</a></li>
+                        <li><a href="recruitment.html">Recruitment</a></li>
+                        <li><a href="#">Accessibility Statement</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section footer-info">
+                    <p>Content Owned and Maintained by KARE ACM SIGBED Student Chapter | Kalasalingam Academy of Research and Education</p>
+                    <p>Website is Designed, Developed and Hosted by KARE Technical Team | Kalasalingam Academy of Research and Education</p>
+                    <p class="last-updated">Last Updated: January 2026</p>
+                </div>
+                <div class="footer-section footer-brand">
+                    <img src="images/kare-acm-sigbed-logo.png" alt="KARE ACM SIGBED Logo" class="footer-logo">
+                    <h4>Follow Us</h4>
+                    <div class="footer-social">
+                        <a href="https://linkedin.com/" target="_blank"><i class="fab fa-linkedin"></i></a>
+                        <a href="https://instagram.com/" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a href="https://youtube.com/" target="_blank"><i class="fab fa-youtube"></i></a>
+                        <a href="mailto:contact@karesgbd.acm.org"><i class="fas fa-envelope"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel | KARE ACM SIGBED</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Login Section -->
+    <div class="login-container" id="loginContainer">
+        <div class="login-box">
+            <div class="login-header">
+                <img src="images/kare-acm-sigbed-logo.png" alt="KARE ACM SIGBED Logo" class="login-logo">
+                <h2>Admin Login</h2>
+                <p>KARE ACM SIGBED Student Chapter</p>
+            </div>
+            <form id="loginForm" class="login-form">
+                <div class="form-group">
+                    <label for="loginEmail"><i class="fas fa-envelope"></i> Email</label>
+                    <input type="email" id="loginEmail" placeholder="admin@karesgbd.acm.org" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword"><i class="fas fa-lock"></i> Password</label>
+                    <input type="password" id="loginPassword" placeholder="Enter password" required>
+                </div>
+                <button type="submit" class="login-btn">
+                    <i class="fas fa-sign-in-alt"></i> Login
+                </button>
+            </form>
+            <div class="login-footer">
+                <a href="index.html"><i class="fas fa-arrow-left"></i> Back to Website</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Dashboard -->
+    <div class="admin-container" id="adminContainer" style="display: none;">
+        <!-- Sidebar -->
+        <aside class="admin-sidebar">
+            <div class="sidebar-header">
+                <img src="images/kare-acm-sigbed-logo.png" alt="Logo" class="sidebar-logo">
+                <h3>Admin Panel</h3>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item active" data-section="dashboard">
+                    <i class="fas fa-tachometer-alt"></i> Dashboard
+                </a>
+                <a href="#" class="nav-item" data-section="applications">
+                    <i class="fas fa-file-alt"></i> Applications
+                    <span class="badge" id="appBadge">0</span>
+                </a>
+                <a href="#" class="nav-item" data-section="events">
+                    <i class="fas fa-calendar-alt"></i> Events
+                </a>
+                <a href="#" class="nav-item" data-section="news">
+                    <i class="fas fa-newspaper"></i> News
+                </a>
+                <a href="#" class="nav-item" data-section="members">
+                    <i class="fas fa-users"></i> Members
+                </a>
+                <a href="#" class="nav-item" data-section="contacts">
+                    <i class="fas fa-envelope"></i> Contacts
+                    <span class="badge" id="contactBadge">0</span>
+                </a>
+                <a href="#" class="nav-item" data-section="settings">
+                    <i class="fas fa-cog"></i> Settings
+                </a>
+            </nav>
+            <div class="sidebar-footer">
+                <button id="logoutBtn" class="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="admin-main">
+            <!-- Header -->
+            <header class="admin-header">
+                <button class="menu-toggle" id="menuToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="header-title">
+                    <h1 id="sectionTitle">Dashboard</h1>
+                </div>
+                <div class="header-actions">
+                    <span class="admin-name" id="adminName">Administrator</span>
+                    <a href="index.html" target="_blank" class="view-site-btn">
+                        <i class="fas fa-external-link-alt"></i> View Site
+                    </a>
+                </div>
+            </header>
+
+            <!-- Dashboard Section -->
+            <section class="content-section active" id="dashboardSection">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon applications"><i class="fas fa-file-alt"></i></div>
+                        <div class="stat-info">
+                            <h3 id="totalApplications">0</h3>
+                            <p>Total Applications</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon pending"><i class="fas fa-clock"></i></div>
+                        <div class="stat-info">
+                            <h3 id="pendingApplications">0</h3>
+                            <p>Pending Review</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon events"><i class="fas fa-calendar-check"></i></div>
+                        <div class="stat-info">
+                            <h3 id="upcomingEvents">0</h3>
+                            <p>Upcoming Events</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon members"><i class="fas fa-users"></i></div>
+                        <div class="stat-info">
+                            <h3 id="totalMembers">0</h3>
+                            <p>Active Members</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dashboard-grid">
+                    <div class="dashboard-card recent-applications">
+                        <h3><i class="fas fa-file-alt"></i> Recent Applications</h3>
+                        <div class="card-content" id="recentApplications">
+                            <p class="loading">Loading...</p>
+                        </div>
+                    </div>
+                    <div class="dashboard-card quick-actions">
+                        <h3><i class="fas fa-bolt"></i> Quick Actions</h3>
+                        <div class="quick-actions-grid">
+                            <button class="quick-action-btn" onclick="showSection('applications')">
+                                <i class="fas fa-file-alt"></i> View Applications
+                            </button>
+                            <button class="quick-action-btn" onclick="openModal('eventModal')">
+                                <i class="fas fa-calendar-plus"></i> Add Event
+                            </button>
+                            <button class="quick-action-btn" onclick="openModal('newsModal')">
+                                <i class="fas fa-plus"></i> Add News
+                            </button>
+                            <button class="quick-action-btn" onclick="openModal('memberModal')">
+                                <i class="fas fa-user-plus"></i> Add Member
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Applications Section -->
+            <section class="content-section" id="applicationsSection">
+                <div class="section-header">
+                    <div class="filters">
+                        <select id="statusFilter" class="filter-select">
+                            <option value="">All Status</option>
+                            <option value="pending">Pending</option>
+                            <option value="reviewing">Reviewing</option>
+                            <option value="shortlisted">Shortlisted</option>
+                            <option value="accepted">Accepted</option>
+                            <option value="rejected">Rejected</option>
+                        </select>
+                        <select id="positionFilter" class="filter-select">
+                            <option value="">All Positions</option>
+                            <option value="web-dev">Web Development</option>
+                            <option value="pr">Public Relations</option>
+                            <option value="technical">Technical</option>
+                            <option value="event">Event Management</option>
+                            <option value="content">Content Creation</option>
+                        </select>
+                        <input type="text" id="searchFilter" class="filter-input" placeholder="Search...">
+                    </div>
+                    <button class="export-btn" onclick="exportApplications()">
+                        <i class="fas fa-download"></i> Export
+                    </button>
+                </div>
+                <div class="table-container">
+                    <table class="data-table" id="applicationsTable">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Department</th>
+                                <th>Position</th>
+                                <th>Status</th>
+                                <th>Date</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="applicationsBody">
+                            <tr><td colspan="8" class="loading">Loading...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="pagination" id="applicationsPagination"></div>
+            </section>
+
+            <!-- Events Section -->
+            <section class="content-section" id="eventsSection">
+                <div class="section-header">
+                    <h3>Manage Events</h3>
+                    <button class="add-btn" onclick="openModal('eventModal')">
+                        <i class="fas fa-plus"></i> Add Event
+                    </button>
+                </div>
+                <div class="cards-grid" id="eventsGrid">
+                    <p class="loading">Loading events...</p>
+                </div>
+            </section>
+
+            <!-- News Section -->
+            <section class="content-section" id="newsSection">
+                <div class="section-header">
+                    <h3>Manage News</h3>
+                    <button class="add-btn" onclick="openModal('newsModal')">
+                        <i class="fas fa-plus"></i> Add News
+                    </button>
+                </div>
+                <div class="cards-grid" id="newsGrid">
+                    <p class="loading">Loading news...</p>
+                </div>
+            </section>
+
+            <!-- Members Section -->
+            <section class="content-section" id="membersSection">
+                <div class="section-header">
+                    <h3>Manage Members</h3>
+                    <button class="add-btn" onclick="openModal('memberModal')">
+                        <i class="fas fa-plus"></i> Add Member
+                    </button>
+                </div>
+                <div class="cards-grid" id="membersGrid">
+                    <p class="loading">Loading members...</p>
+                </div>
+            </section>
+
+            <!-- Contacts Section -->
+            <section class="content-section" id="contactsSection">
+                <div class="section-header">
+                    <h3>Contact Messages</h3>
+                    <select id="contactStatusFilter" class="filter-select">
+                        <option value="">All</option>
+                        <option value="new">New</option>
+                        <option value="read">Read</option>
+                        <option value="replied">Replied</option>
+                    </select>
+                </div>
+                <div class="messages-list" id="contactsList">
+                    <p class="loading">Loading messages...</p>
+                </div>
+            </section>
+
+            <!-- Settings Section -->
+            <section class="content-section" id="settingsSection">
+                <div class="settings-grid">
+                    <div class="settings-card">
+                        <h3><i class="fas fa-user-cog"></i> Account Settings</h3>
+                        <form id="accountSettingsForm">
+                            <div class="form-group">
+                                <label>Name</label>
+                                <input type="text" id="settingsName" value="Administrator">
+                            </div>
+                            <div class="form-group">
+                                <label>Email</label>
+                                <input type="email" id="settingsEmail" value="admin@karesgbd.acm.org">
+                            </div>
+                            <button type="submit" class="save-btn">Save Changes</button>
+                        </form>
+                    </div>
+                    <div class="settings-card">
+                        <h3><i class="fas fa-lock"></i> Change Password</h3>
+                        <form id="passwordForm">
+                            <div class="form-group">
+                                <label>Current Password</label>
+                                <input type="password" id="currentPassword">
+                            </div>
+                            <div class="form-group">
+                                <label>New Password</label>
+                                <input type="password" id="newPassword">
+                            </div>
+                            <div class="form-group">
+                                <label>Confirm Password</label>
+                                <input type="password" id="confirmPassword">
+                            </div>
+                            <button type="submit" class="save-btn">Update Password</button>
+                        </form>
+                    </div>
+                    <div class="settings-card">
+                        <h3><i class="fas fa-globe"></i> Site Settings</h3>
+                        <form id="siteSettingsForm">
+                            <div class="form-group">
+                                <label>Recruitment Status</label>
+                                <select id="recruitmentStatus">
+                                    <option value="open">Open</option>
+                                    <option value="closed">Closed</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Contact Email</label>
+                                <input type="email" id="contactEmail" value="contact@karesgbd.acm.org">
+                            </div>
+                            <button type="submit" class="save-btn">Save Settings</button>
+                        </form>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Modals -->
+    <!-- Application Detail Modal -->
+    <div class="modal" id="applicationModal">
+        <div class="modal-content large">
+            <div class="modal-header">
+                <h3>Application Details</h3>
+                <button class="close-btn" onclick="closeModal('applicationModal')">&times;</button>
+            </div>
+            <div class="modal-body" id="applicationDetails">
+                <!-- Content loaded dynamically -->
+            </div>
+            <div class="modal-footer">
+                <select id="applicationStatus" class="status-select">
+                    <option value="pending">Pending</option>
+                    <option value="reviewing">Reviewing</option>
+                    <option value="shortlisted">Shortlisted</option>
+                    <option value="accepted">Accepted</option>
+                    <option value="rejected">Rejected</option>
+                </select>
+                <button class="save-btn" onclick="updateApplicationStatus()">Update Status</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Event Modal -->
+    <div class="modal" id="eventModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Add/Edit Event</h3>
+                <button class="close-btn" onclick="closeModal('eventModal')">&times;</button>
+            </div>
+            <form id="eventForm" class="modal-form">
+                <div class="form-group">
+                    <label>Event Title *</label>
+                    <input type="text" id="eventTitle" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Event Type *</label>
+                        <select id="eventType" required>
+                            <option value="workshop">Workshop</option>
+                            <option value="hackathon">Hackathon</option>
+                            <option value="seminar">Seminar</option>
+                            <option value="competition">Competition</option>
+                            <option value="webinar">Webinar</option>
+                            <option value="meetup">Meetup</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Date *</label>
+                        <input type="date" id="eventDate" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Time</label>
+                        <input type="text" id="eventTime" placeholder="e.g., 10:00 AM - 4:00 PM">
+                    </div>
+                    <div class="form-group">
+                        <label>Venue</label>
+                        <input type="text" id="eventVenue">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Description *</label>
+                    <textarea id="eventDescription" rows="4" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Image URL</label>
+                    <input type="url" id="eventImage">
+                </div>
+                <div class="form-row">
+                    <div class="form-group checkbox-group">
+                        <input type="checkbox" id="eventFeatured">
+                        <label for="eventFeatured">Featured Event</label>
+                    </div>
+                    <div class="form-group checkbox-group">
+                        <input type="checkbox" id="eventOnline">
+                        <label for="eventOnline">Online Event</label>
+                    </div>
+                </div>
+                <input type="hidden" id="eventId">
+                <button type="submit" class="save-btn">Save Event</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- News Modal -->
+    <div class="modal" id="newsModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Add/Edit News</h3>
+                <button class="close-btn" onclick="closeModal('newsModal')">&times;</button>
+            </div>
+            <form id="newsForm" class="modal-form">
+                <div class="form-group">
+                    <label>Title *</label>
+                    <input type="text" id="newsTitle" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Category *</label>
+                        <select id="newsCategory" required>
+                            <option value="announcement">Announcement</option>
+                            <option value="achievement">Achievement</option>
+                            <option value="event">Event</option>
+                            <option value="update">Update</option>
+                            <option value="general">General</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Source</label>
+                        <input type="text" id="newsSource" value="KARE ACM SIGBED">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Content *</label>
+                    <textarea id="newsContent" rows="6" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Image URL</label>
+                    <input type="url" id="newsImage">
+                </div>
+                <div class="form-row">
+                    <div class="form-group checkbox-group">
+                        <input type="checkbox" id="newsPublished" checked>
+                        <label for="newsPublished">Published</label>
+                    </div>
+                    <div class="form-group checkbox-group">
+                        <input type="checkbox" id="newsFeatured">
+                        <label for="newsFeatured">Featured</label>
+                    </div>
+                </div>
+                <input type="hidden" id="newsId">
+                <button type="submit" class="save-btn">Save News</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Member Modal -->
+    <div class="modal" id="memberModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Add/Edit Member</h3>
+                <button class="close-btn" onclick="closeModal('memberModal')">&times;</button>
+            </div>
+            <form id="memberForm" class="modal-form">
+                <div class="form-group">
+                    <label>Name *</label>
+                    <input type="text" id="memberName" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Position *</label>
+                        <input type="text" id="memberPosition" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Team *</label>
+                        <select id="memberTeam" required>
+                            <option value="faculty">Faculty</option>
+                            <option value="core">Core</option>
+                            <option value="web-development">Web Development</option>
+                            <option value="public-relations">Public Relations</option>
+                            <option value="technical">Technical</option>
+                            <option value="event-management">Event Management</option>
+                            <option value="content">Content</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Department *</label>
+                    <input type="text" id="memberDepartment" required>
+                </div>
+                <div class="form-group">
+                    <label>Bio</label>
+                    <textarea id="memberBio" rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Image URL</label>
+                    <input type="url" id="memberImage">
+                </div>
+                <div class="form-group">
+                    <label>LinkedIn URL</label>
+                    <input type="url" id="memberLinkedin">
+                </div>
+                <input type="hidden" id="memberId">
+                <button type="submit" class="save-btn">Save Member</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <i class="fas fa-check-circle"></i>
+        <span id="toastMessage">Success!</span>
+    </div>
+
+    <script src="js/admin.js"></script>
+</body>
+</html>

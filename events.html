@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Events | KARE ACM SIGBED Student Chapter</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .events-hero {
+            background: linear-gradient(135deg, rgba(0, 48, 87, 0.9), rgba(0, 102, 204, 0.8)),
+                        url('https://karesgbd.acm.org/images/bg-pattern.png');
+            padding: 120px 0 80px;
+            text-align: center;
+            color: white;
+        }
+        
+        .events-hero h1 {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+        
+        .events-hero p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .events-section {
+            padding: 80px 0;
+        }
+
+        .events-filter {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 10px 25px;
+            border: 2px solid var(--secondary-color);
+            background: transparent;
+            color: var(--secondary-color);
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: var(--secondary-color);
+            color: white;
+        }
+
+        .events-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+        }
+
+        .event-card {
+            background: var(--card-bg-light);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .event-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .event-image {
+            height: 200px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .event-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .event-card:hover .event-image img {
+            transform: scale(1.1);
+        }
+
+        .event-date {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: var(--accent-color);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 10px;
+            text-align: center;
+            line-height: 1.2;
+        }
+
+        .event-date .day {
+            font-size: 1.5rem;
+            font-weight: 700;
+            display: block;
+        }
+
+        .event-date .month {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+        }
+
+        .event-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--secondary-color);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .event-content {
+            padding: 25px;
+        }
+
+        .event-content h3 {
+            font-size: 1.3rem;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .event-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .event-meta span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .event-meta i {
+            color: var(--secondary-color);
+        }
+
+        .event-content p {
+            color: var(--text-light);
+            margin-bottom: 20px;
+            line-height: 1.7;
+        }
+
+        .event-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 25px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border-radius: 25px;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .event-btn:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 20px rgba(0, 102, 204, 0.3);
+        }
+
+        .event-btn.disabled {
+            background: #ccc;
+            pointer-events: none;
+        }
+
+        /* Timeline Section */
+        .timeline-section {
+            background: var(--background-light);
+            padding: 80px 0;
+        }
+
+        .timeline {
+            position: relative;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--primary-color), var(--secondary-color));
+            border-radius: 2px;
+        }
+
+        .timeline-item {
+            display: flex;
+            justify-content: flex-end;
+            padding-right: 50%;
+            position: relative;
+            margin-bottom: 50px;
+        }
+
+        .timeline-item:nth-child(even) {
+            justify-content: flex-start;
+            padding-right: 0;
+            padding-left: 50%;
+        }
+
+        .timeline-content {
+            background: var(--card-bg-light);
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            width: calc(100% - 50px);
+            position: relative;
+        }
+
+        .timeline-item:nth-child(odd) .timeline-content {
+            margin-right: 30px;
+        }
+
+        .timeline-item:nth-child(even) .timeline-content {
+            margin-left: 30px;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 20px;
+            background: var(--secondary-color);
+            border: 4px solid white;
+            border-radius: 50%;
+            z-index: 1;
+        }
+
+        .timeline-content h4 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .timeline-content .date {
+            color: var(--secondary-color);
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+
+        .timeline-content p {
+            color: #666;
+        }
+
+        @media (max-width: 768px) {
+            .timeline::before {
+                left: 20px;
+            }
+
+            .timeline-item,
+            .timeline-item:nth-child(even) {
+                padding-left: 60px;
+                padding-right: 0;
+                justify-content: flex-start;
+            }
+
+            .timeline-item:nth-child(odd) .timeline-content,
+            .timeline-item:nth-child(even) .timeline-content {
+                margin: 0;
+            }
+
+            .timeline-dot {
+                left: 20px;
+            }
+        }
+
+        .no-events {
+            text-align: center;
+            padding: 60px 20px;
+            color: #666;
+        }
+
+        .no-events i {
+            font-size: 4rem;
+            color: #ddd;
+            margin-bottom: 20px;
+        }
+
+        .no-events h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header" id="header">
+        <nav class="nav container">
+            <a href="index.html" class="nav-logo">
+                <img src="images/kare-acm-sigbed-logo.png" alt="KARE ACM SIGBED Logo">
+            </a>
+            <div class="nav-menu" id="nav-menu">
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+                    <li class="nav-item"><a href="events.html" class="nav-link active">Events</a></li>
+                    <li class="nav-item"><a href="members.html" class="nav-link">Team</a></li>
+                    <li class="nav-item"><a href="gallery.html" class="nav-link">Gallery</a></li>
+                    <li class="nav-item"><a href="recruitment.html" class="nav-link">Join Us</a></li>
+                </ul>
+                <button class="theme-toggle" id="themeToggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+            <button class="nav-toggle" id="nav-toggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="events-hero">
+        <div class="container">
+            <h1>Our Events</h1>
+            <p>Workshops, Hackathons, Seminars & More</p>
+        </div>
+    </section>
+
+    <!-- Events Section -->
+    <section class="events-section">
+        <div class="container">
+            <div class="events-filter">
+                <button class="filter-btn active" data-filter="all">All Events</button>
+                <button class="filter-btn" data-filter="upcoming">Upcoming</button>
+                <button class="filter-btn" data-filter="workshop">Workshops</button>
+                <button class="filter-btn" data-filter="hackathon">Hackathons</button>
+                <button class="filter-btn" data-filter="seminar">Seminars</button>
+            </div>
+
+            <div class="events-grid" id="eventsGrid">
+                <!-- Events loaded dynamically -->
+                <div class="loading">Loading events...</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Past Events Timeline -->
+    <section class="timeline-section">
+        <div class="container">
+            <h2 class="section-title">Event Timeline</h2>
+            <div class="timeline" id="eventsTimeline">
+                <!-- Timeline items loaded dynamically -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <img src="images/kare-acm-sigbed-logo.png" alt="KARE ACM SIGBED Logo" class="footer-logo">
+                    <p>KARE ACM SIGBED Student Chapter - Empowering students through embedded systems and technology.</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="events.html">Events</a></li>
+                        <li><a href="members.html">Team</a></li>
+                        <li><a href="recruitment.html">Join Us</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Connect With Us</h4>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 KARE ACM SIGBED Student Chapter. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script>
+        // Load Events
+        async function loadEvents() {
+            try {
+                const response = await fetch('/api/events');
+                const data = await response.json();
+                
+                if (data.success && data.data.events.length > 0) {
+                    displayEvents(data.data.events);
+                    displayTimeline(data.data.events);
+                } else {
+                    displaySampleEvents();
+                }
+            } catch (error) {
+                console.error('Error loading events:', error);
+                displaySampleEvents();
+            }
+        }
+
+        function displaySampleEvents() {
+            const sampleEvents = [
+                {
+                    title: 'IoT Workshop 2024',
+                    eventType: 'workshop',
+                    date: '2024-03-15',
+                    time: '10:00 AM - 4:00 PM',
+                    venue: 'KARE Tech Lab',
+                    description: 'Learn the fundamentals of IoT and build your first connected device.',
+                    image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=500',
+                    status: 'upcoming'
+                },
+                {
+                    title: 'Embedded Systems Hackathon',
+                    eventType: 'hackathon',
+                    date: '2024-04-20',
+                    time: '9:00 AM - 9:00 PM',
+                    venue: 'Innovation Hub',
+                    description: '24-hour hackathon focused on embedded systems solutions.',
+                    image: 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=500',
+                    status: 'upcoming'
+                },
+                {
+                    title: 'Guest Lecture: Future of AI',
+                    eventType: 'seminar',
+                    date: '2024-02-28',
+                    time: '2:00 PM - 4:00 PM',
+                    venue: 'Seminar Hall',
+                    description: 'Industry expert discusses the future of AI in embedded systems.',
+                    image: 'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=500',
+                    status: 'completed'
+                },
+                {
+                    title: 'Python for Hardware',
+                    eventType: 'workshop',
+                    date: '2024-01-20',
+                    time: '10:00 AM - 1:00 PM',
+                    venue: 'Computer Lab',
+                    description: 'Workshop on using Python for hardware programming.',
+                    image: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=500',
+                    status: 'completed'
+                }
+            ];
+            
+            displayEvents(sampleEvents);
+            displayTimeline(sampleEvents);
+        }
+
+        function displayEvents(events) {
+            const grid = document.getElementById('eventsGrid');
+            
+            grid.innerHTML = events.map(event => {
+                const eventDate = new Date(event.date);
+                const day = eventDate.getDate();
+                const month = eventDate.toLocaleString('default', { month: 'short' });
+                const isPast = eventDate < new Date();
+                
+                return `
+                    <div class="event-card" data-type="${event.eventType}" data-status="${isPast ? 'past' : 'upcoming'}">
+                        <div class="event-image">
+                            <img src="${event.image || 'https://via.placeholder.com/400x200'}" alt="${event.title}">
+                            <div class="event-date">
+                                <span class="day">${day}</span>
+                                <span class="month">${month}</span>
+                            </div>
+                            <span class="event-badge">${event.eventType}</span>
+                        </div>
+                        <div class="event-content">
+                            <h3>${event.title}</h3>
+                            <div class="event-meta">
+                                <span><i class="fas fa-clock"></i> ${event.time || 'TBA'}</span>
+                                <span><i class="fas fa-map-marker-alt"></i> ${event.venue || 'TBA'}</span>
+                            </div>
+                            <p>${event.description}</p>
+                            <a href="#" class="event-btn ${isPast ? 'disabled' : ''}">
+                                ${isPast ? 'Event Ended' : 'Register Now'} <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function displayTimeline(events) {
+            const timeline = document.getElementById('eventsTimeline');
+            const sortedEvents = [...events].sort((a, b) => new Date(b.date) - new Date(a.date));
+            
+            timeline.innerHTML = sortedEvents.slice(0, 5).map((event, index) => {
+                const eventDate = new Date(event.date);
+                const formattedDate = eventDate.toLocaleDateString('en-US', { 
+                    month: 'long', 
+                    day: 'numeric', 
+                    year: 'numeric' 
+                });
+                
+                return `
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <span class="date">${formattedDate}</span>
+                            <h4>${event.title}</h4>
+                            <p>${event.description}</p>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Filter Events
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                
+                const filter = btn.dataset.filter;
+                const cards = document.querySelectorAll('.event-card');
+                
+                cards.forEach(card => {
+                    if (filter === 'all') {
+                        card.style.display = 'block';
+                    } else if (filter === 'upcoming') {
+                        card.style.display = card.dataset.status === 'upcoming' ? 'block' : 'none';
+                    } else {
+                        card.style.display = card.dataset.type === filter ? 'block' : 'none';
+                    }
+                });
+            });
+        });
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', loadEvents);
+    </script>
+</body>
+</html>

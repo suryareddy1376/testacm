@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery | KARE ACM SIGBED Student Chapter</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .gallery-hero {
+            background: linear-gradient(135deg, rgba(0, 48, 87, 0.9), rgba(0, 102, 204, 0.8)),
+                        url('https://karesgbd.acm.org/images/bg-pattern.png');
+            padding: 120px 0 80px;
+            text-align: center;
+            color: white;
+        }
+        
+        .gallery-hero h1 {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+        
+        .gallery-hero p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .gallery-section {
+            padding: 80px 0;
+        }
+
+        .gallery-filter {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 10px 25px;
+            border: 2px solid var(--secondary-color);
+            background: transparent;
+            color: var(--secondary-color);
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: var(--secondary-color);
+            color: white;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .gallery-item {
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            cursor: pointer;
+            aspect-ratio: 4/3;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(transparent 40%, rgba(0, 48, 87, 0.9));
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 20px;
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+        }
+
+        .gallery-overlay h4 {
+            color: white;
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+        }
+
+        .gallery-overlay span {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9rem;
+        }
+
+        .gallery-overlay .zoom-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 50px;
+            height: 50px;
+            background: var(--secondary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        /* Lightbox */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .lightbox.active {
+            display: flex;
+        }
+
+        .lightbox-content {
+            max-width: 90%;
+            max-height: 90%;
+            position: relative;
+        }
+
+        .lightbox-content img {
+            max-width: 100%;
+            max-height: 80vh;
+            object-fit: contain;
+            border-radius: 10px;
+        }
+
+        .lightbox-caption {
+            text-align: center;
+            color: white;
+            margin-top: 15px;
+        }
+
+        .lightbox-caption h4 {
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+
+        .lightbox-caption span {
+            opacity: 0.8;
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 2rem;
+            color: white;
+            cursor: pointer;
+            z-index: 10000;
+            transition: var(--transition);
+        }
+
+        .lightbox-close:hover {
+            color: var(--accent-color);
+        }
+
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 2rem;
+            color: white;
+            cursor: pointer;
+            padding: 20px;
+            transition: var(--transition);
+        }
+
+        .lightbox-nav:hover {
+            color: var(--secondary-color);
+        }
+
+        .lightbox-prev {
+            left: 20px;
+        }
+
+        .lightbox-next {
+            right: 20px;
+        }
+
+        /* Stats Section */
+        .gallery-stats {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            padding: 60px 0;
+            color: white;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            text-align: center;
+        }
+
+        .stat-item h3 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
+
+        .stat-item p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        @media (max-width: 768px) {
+            .gallery-hero h1 {
+                font-size: 2rem;
+            }
+            
+            .gallery-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+            }
+
+            .lightbox-nav {
+                font-size: 1.5rem;
+                padding: 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header" id="header">
+        <nav class="nav container">
+            <a href="index.html" class="nav-logo">
+                <img src="images/kare-acm-sigbed-logo.png" alt="KARE ACM SIGBED Logo">
+            </a>
+            <div class="nav-menu" id="nav-menu">
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+                    <li class="nav-item"><a href="events.html" class="nav-link">Events</a></li>
+                    <li class="nav-item"><a href="members.html" class="nav-link">Team</a></li>
+                    <li class="nav-item"><a href="gallery.html" class="nav-link active">Gallery</a></li>
+                    <li class="nav-item"><a href="recruitment.html" class="nav-link">Join Us</a></li>
+                </ul>
+                <button class="theme-toggle" id="themeToggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+            <button class="nav-toggle" id="nav-toggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="gallery-hero">
+        <div class="container">
+            <h1>Photo Gallery</h1>
+            <p>Capturing moments from our events and activities</p>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section class="gallery-section">
+        <div class="container">
+            <div class="gallery-filter">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="workshop">Workshops</button>
+                <button class="filter-btn" data-filter="hackathon">Hackathons</button>
+                <button class="filter-btn" data-filter="seminar">Seminars</button>
+                <button class="filter-btn" data-filter="team">Team</button>
+            </div>
+
+            <div class="gallery-grid" id="galleryGrid">
+                <!-- Gallery items will be loaded dynamically -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="gallery-stats">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <h3 id="totalPhotos">50+</h3>
+                    <p>Photos</p>
+                </div>
+                <div class="stat-item">
+                    <h3 id="totalEvents">15+</h3>
+                    <p>Events Captured</p>
+                </div>
+                <div class="stat-item">
+                    <h3 id="totalMemories">100+</h3>
+                    <p>Memories Made</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox">
+        <span class="lightbox-close" id="lightboxClose">&times;</span>
+        <span class="lightbox-nav lightbox-prev" id="lightboxPrev"><i class="fas fa-chevron-left"></i></span>
+        <span class="lightbox-nav lightbox-next" id="lightboxNext"><i class="fas fa-chevron-right"></i></span>
+        <div class="lightbox-content">
+            <img src="" alt="" id="lightboxImage">
+            <div class="lightbox-caption">
+                <h4 id="lightboxTitle"></h4>
+                <span id="lightboxCategory"></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <img src="images/kare-acm-sigbed-logo.png" alt="KARE ACM SIGBED Logo" class="footer-logo">
+                    <p>KARE ACM SIGBED Student Chapter - Empowering students through embedded systems and technology.</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="events.html">Events</a></li>
+                        <li><a href="members.html">Team</a></li>
+                        <li><a href="recruitment.html">Join Us</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Connect With Us</h4>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 KARE ACM SIGBED Student Chapter. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script>
+        // Sample Gallery Data
+        const galleryItems = [
+            { image: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=600', title: 'IoT Workshop 2024', category: 'workshop' },
+            { image: 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=600', title: 'Hackathon Event', category: 'hackathon' },
+            { image: 'https://images.unsplash.com/photo-1475721027785-f74eccf877e2?w=600', title: 'Tech Seminar', category: 'seminar' },
+            { image: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=600', title: 'Team Meeting', category: 'team' },
+            { image: 'https://images.unsplash.com/photo-1531482615713-2afd69097998?w=600', title: 'Embedded Systems Workshop', category: 'workshop' },
+            { image: 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=600', title: 'Coding Challenge', category: 'hackathon' },
+            { image: 'https://images.unsplash.com/photo-1559223607-a43c990c692c?w=600', title: 'Industry Talk', category: 'seminar' },
+            { image: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=600', title: 'Team Outing', category: 'team' },
+            { image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=600', title: 'Hardware Lab', category: 'workshop' },
+            { image: 'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=600', title: 'AI Workshop', category: 'workshop' },
+            { image: 'https://images.unsplash.com/photo-1511578314322-379afb476865?w=600', title: 'Hackathon Night', category: 'hackathon' },
+            { image: 'https://images.unsplash.com/photo-1557804506-669a67965ba0?w=600', title: 'Guest Lecture', category: 'seminar' }
+        ];
+
+        let currentIndex = 0;
+
+        // Display Gallery
+        function displayGallery(items = galleryItems) {
+            const grid = document.getElementById('galleryGrid');
+            
+            grid.innerHTML = items.map((item, index) => `
+                <div class="gallery-item" data-category="${item.category}" onclick="openLightbox(${index})">
+                    <img src="${item.image}" alt="${item.title}">
+                    <div class="gallery-overlay">
+                        <div class="zoom-icon"><i class="fas fa-search-plus"></i></div>
+                        <h4>${item.title}</h4>
+                        <span>${item.category.charAt(0).toUpperCase() + item.category.slice(1)}</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Filter Gallery
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                
+                const filter = btn.dataset.filter;
+                const items = document.querySelectorAll('.gallery-item');
+                
+                items.forEach(item => {
+                    if (filter === 'all' || item.dataset.category === filter) {
+                        item.style.display = 'block';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // Lightbox Functions
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImage = document.getElementById('lightboxImage');
+        const lightboxTitle = document.getElementById('lightboxTitle');
+        const lightboxCategory = document.getElementById('lightboxCategory');
+
+        function openLightbox(index) {
+            currentIndex = index;
+            updateLightbox();
+            lightbox.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            lightbox.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        function updateLightbox() {
+            const item = galleryItems[currentIndex];
+            lightboxImage.src = item.image;
+            lightboxImage.alt = item.title;
+            lightboxTitle.textContent = item.title;
+            lightboxCategory.textContent = item.category.charAt(0).toUpperCase() + item.category.slice(1);
+        }
+
+        function nextImage() {
+            currentIndex = (currentIndex + 1) % galleryItems.length;
+            updateLightbox();
+        }
+
+        function prevImage() {
+            currentIndex = (currentIndex - 1 + galleryItems.length) % galleryItems.length;
+            updateLightbox();
+        }
+
+        // Event Listeners
+        document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
+        document.getElementById('lightboxNext').addEventListener('click', nextImage);
+        document.getElementById('lightboxPrev').addEventListener('click', prevImage);
+
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) closeLightbox();
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (!lightbox.classList.contains('active')) return;
+            
+            if (e.key === 'Escape') closeLightbox();
+            if (e.key === 'ArrowRight') nextImage();
+            if (e.key === 'ArrowLeft') prevImage();
+        });
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            displayGallery();
+        });
+    </script>
+</body>
+</html>

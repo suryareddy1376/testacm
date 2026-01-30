@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Team | KARE ACM SIGBED Student Chapter</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .team-hero {
+            background: linear-gradient(135deg, rgba(0, 48, 87, 0.9), rgba(0, 102, 204, 0.8)),
+                        url('https://karesgbd.acm.org/images/bg-pattern.png');
+            padding: 120px 0 80px;
+            text-align: center;
+            color: white;
+        }
+        
+        .team-hero h1 {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+        
+        .team-hero p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .team-section {
+            padding: 80px 0;
+        }
+
+        .team-section:nth-child(even) {
+            background: var(--background-light);
+        }
+
+        .team-category {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .team-category h2 {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .team-category p {
+            color: #666;
+        }
+
+        /* Faculty Advisor */
+        .faculty-grid {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+
+        .faculty-card {
+            background: var(--card-bg-light);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            max-width: 400px;
+            transition: var(--transition);
+        }
+
+        .faculty-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .faculty-image {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin: 0 auto 25px;
+            border: 5px solid var(--secondary-color);
+        }
+
+        .faculty-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .faculty-card h3 {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+
+        .faculty-card .position {
+            color: var(--secondary-color);
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .faculty-card .department {
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        .faculty-card .bio {
+            color: var(--text-light);
+            line-height: 1.7;
+        }
+
+        /* Team Grid */
+        .members-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .member-card {
+            background: var(--card-bg-light);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .member-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .member-image {
+            height: 280px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .member-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .member-card:hover .member-image img {
+            transform: scale(1.1);
+        }
+
+        .member-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 20px;
+            background: linear-gradient(transparent, rgba(0, 48, 87, 0.9));
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .member-card:hover .member-overlay {
+            opacity: 1;
+        }
+
+        .member-overlay .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .member-overlay .social-link {
+            width: 40px;
+            height: 40px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-color);
+            transition: var(--transition);
+        }
+
+        .member-overlay .social-link:hover {
+            background: var(--secondary-color);
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        .member-info {
+            padding: 25px;
+            text-align: center;
+        }
+
+        .member-info h4 {
+            font-size: 1.2rem;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+
+        .member-info .position {
+            color: var(--secondary-color);
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+
+        .member-info .department {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        /* Core Team Section */
+        .core-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .core-card {
+            background: var(--card-bg-light);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            border-top: 4px solid var(--secondary-color);
+            transition: var(--transition);
+        }
+
+        .core-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .core-image {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin: 0 auto 20px;
+            border: 4px solid var(--background-light);
+        }
+
+        .core-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .core-card h4 {
+            font-size: 1.3rem;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+
+        .core-card .position {
+            color: var(--secondary-color);
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .core-card .bio {
+            color: #666;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .core-card .social-links {
+            margin-top: 15px;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .core-card .social-link {
+            width: 35px;
+            height: 35px;
+            background: var(--background-light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--secondary-color);
+            transition: var(--transition);
+        }
+
+        .core-card .social-link:hover {
+            background: var(--secondary-color);
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .team-hero h1 {
+                font-size: 2rem;
+            }
+            
+            .team-hero p {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header" id="header">
+        <nav class="nav container">
+            <a href="index.html" class="nav-logo">
+                <img src="images/kare-acm-sigbed-logo.png" alt="KARE ACM SIGBED Logo">
+            </a>
+            <div class="nav-menu" id="nav-menu">
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+                    <li class="nav-item"><a href="events.html" class="nav-link">Events</a></li>
+                    <li class="nav-item"><a href="members.html" class="nav-link active">Team</a></li>
+                    <li class="nav-item"><a href="gallery.html" class="nav-link">Gallery</a></li>
+                    <li class="nav-item"><a href="recruitment.html" class="nav-link">Join Us</a></li>
+                </ul>
+                <button class="theme-toggle" id="themeToggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+            <button class="nav-toggle" id="nav-toggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="team-hero">
+        <div class="container">
+            <h1>Meet Our Team</h1>
+            <p>The passionate individuals behind KARE ACM SIGBED</p>
+        </div>
+    </section>
+
+    <!-- Faculty Advisor Section -->
+    <section class="team-section">
+        <div class="container">
+            <div class="team-category">
+                <h2>Faculty Advisor</h2>
+                <p>Guiding our chapter towards excellence</p>
+            </div>
+            <div class="faculty-grid" id="facultyGrid">
+                <div class="faculty-card">
+                    <div class="faculty-image">
+                        <img src="https://ui-avatars.com/api/?name=Dr+Faculty&background=0066cc&color=fff&size=180" alt="Faculty Advisor">
+                    </div>
+                    <h3>Dr. Faculty Advisor</h3>
+                    <p class="position">Faculty Advisor</p>
+                    <p class="department">Department of Computer Science</p>
+                    <p class="bio">Dedicated to fostering innovation and technical excellence among students.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Core Team Section -->
+    <section class="team-section">
+        <div class="container">
+            <div class="team-category">
+                <h2>Core Team</h2>
+                <p>Leading the chapter with vision and dedication</p>
+            </div>
+            <div class="core-grid" id="coreGrid">
+                <div class="core-card">
+                    <div class="core-image">
+                        <img src="https://ui-avatars.com/api/?name=Chair&background=003057&color=fff&size=150" alt="Chair">
+                    </div>
+                    <h4>Chairperson</h4>
+                    <p class="position">Chair</p>
+                    <p class="bio">Leading the chapter with strategic vision and innovation.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+                <div class="core-card">
+                    <div class="core-image">
+                        <img src="https://ui-avatars.com/api/?name=Vice+Chair&background=0066cc&color=fff&size=150" alt="Vice Chair">
+                    </div>
+                    <h4>Vice Chairperson</h4>
+                    <p class="position">Vice Chair</p>
+                    <p class="bio">Coordinating chapter activities and member engagement.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+                <div class="core-card">
+                    <div class="core-image">
+                        <img src="https://ui-avatars.com/api/?name=Secretary&background=ff6b35&color=fff&size=150" alt="Secretary">
+                    </div>
+                    <h4>Secretary</h4>
+                    <p class="position">Secretary</p>
+                    <p class="bio">Managing communications and documentation.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Sections -->
+    <section class="team-section" id="webDevSection">
+        <div class="container">
+            <div class="team-category">
+                <h2>Web Development Team</h2>
+                <p>Building digital experiences</p>
+            </div>
+            <div class="members-grid" id="webDevGrid">
+                <!-- Members loaded dynamically -->
+            </div>
+        </div>
+    </section>
+
+    <section class="team-section" id="technicalSection">
+        <div class="container">
+            <div class="team-category">
+                <h2>Technical Team</h2>
+                <p>Driving technical excellence</p>
+            </div>
+            <div class="members-grid" id="technicalGrid">
+                <!-- Members loaded dynamically -->
+            </div>
+        </div>
+    </section>
+
+    <section class="team-section" id="prSection">
+        <div class="container">
+            <div class="team-category">
+                <h2>Public Relations Team</h2>
+                <p>Connecting with the community</p>
+            </div>
+            <div class="members-grid" id="prGrid">
+                <!-- Members loaded dynamically -->
+            </div>
+        </div>
+    </section>
+
+    <section class="team-section" id="eventSection">
+        <div class="container">
+            <div class="team-category">
+                <h2>Event Management Team</h2>
+                <p>Orchestrating memorable events</p>
+            </div>
+            <div class="members-grid" id="eventGrid">
+                <!-- Members loaded dynamically -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <img src="images/kare-acm-sigbed-logo.png" alt="KARE ACM SIGBED Logo" class="footer-logo">
+                    <p>KARE ACM SIGBED Student Chapter - Empowering students through embedded systems and technology.</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="events.html">Events</a></li>
+                        <li><a href="members.html">Team</a></li>
+                        <li><a href="recruitment.html">Join Us</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Connect With Us</h4>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 KARE ACM SIGBED Student Chapter. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script>
+        // Load Members
+        async function loadMembers() {
+            try {
+                const response = await fetch('/api/members/teams');
+                const data = await response.json();
+                
+                if (data.success) {
+                    displayTeams(data.data);
+                } else {
+                    displaySampleMembers();
+                }
+            } catch (error) {
+                console.error('Error loading members:', error);
+                displaySampleMembers();
+            }
+        }
+
+        function displaySampleMembers() {
+            const sampleMembers = {
+                'web-development': [
+                    { name: 'Member 1', position: 'Lead', department: 'CSE' },
+                    { name: 'Member 2', position: 'Developer', department: 'CSE' },
+                    { name: 'Member 3', position: 'Developer', department: 'IT' }
+                ],
+                'technical': [
+                    { name: 'Member 4', position: 'Lead', department: 'ECE' },
+                    { name: 'Member 5', position: 'Member', department: 'CSE' }
+                ],
+                'public-relations': [
+                    { name: 'Member 6', position: 'Lead', department: 'CSE' },
+                    { name: 'Member 7', position: 'Member', department: 'IT' }
+                ],
+                'event-management': [
+                    { name: 'Member 8', position: 'Lead', department: 'CSE' },
+                    { name: 'Member 9', position: 'Member', department: 'ECE' }
+                ]
+            };
+            
+            displayTeams(sampleMembers);
+        }
+
+        function displayTeams(teams) {
+            const teamMappings = {
+                'web-development': 'webDevGrid',
+                'technical': 'technicalGrid',
+                'public-relations': 'prGrid',
+                'event-management': 'eventGrid'
+            };
+
+            Object.keys(teamMappings).forEach(teamKey => {
+                const grid = document.getElementById(teamMappings[teamKey]);
+                const members = teams[teamKey] || [];
+                
+                if (members.length > 0) {
+                    grid.innerHTML = members.map(member => `
+                        <div class="member-card">
+                            <div class="member-image">
+                                <img src="${member.image || `https://ui-avatars.com/api/?name=${encodeURIComponent(member.name)}&background=0066cc&color=fff&size=280`}" alt="${member.name}">
+                                <div class="member-overlay">
+                                    <div class="social-links">
+                                        ${member.socialLinks?.linkedin ? `<a href="${member.socialLinks.linkedin}" class="social-link" target="_blank"><i class="fab fa-linkedin"></i></a>` : ''}
+                                        ${member.socialLinks?.github ? `<a href="${member.socialLinks.github}" class="social-link" target="_blank"><i class="fab fa-github"></i></a>` : ''}
+                                        <a href="#" class="social-link"><i class="fas fa-envelope"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="member-info">
+                                <h4>${member.name}</h4>
+                                <p class="position">${member.position}</p>
+                                <p class="department">${member.department}</p>
+                            </div>
+                        </div>
+                    `).join('');
+                } else {
+                    grid.innerHTML = '<p style="text-align: center; color: #666; grid-column: 1/-1;">Team members will be updated soon.</p>';
+                }
+            });
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', loadMembers);
+    </script>
+</body>
+</html>
