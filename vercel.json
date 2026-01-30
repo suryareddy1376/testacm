@@ -4,6 +4,22 @@
     {
       "src": "server.js",
       "use": "@vercel/node"
+    },
+    {
+      "src": "*.html",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "css/**",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "js/**",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "images/**",
+      "use": "@vercel/static"
     }
   ],
   "routes": [
@@ -12,11 +28,27 @@
       "dest": "server.js"
     },
     {
-      "src": "/(.*\\.(html|css|js|png|jpg|jpeg|gif|svg|ico))",
-      "dest": "/$1"
+      "src": "/css/(.*)",
+      "dest": "/css/$1"
     },
     {
-      "src": "/(.*)",
+      "src": "/js/(.*)",
+      "dest": "/js/$1"
+    },
+    {
+      "src": "/images/(.*)",
+      "dest": "/images/$1"
+    },
+    {
+      "src": "/(.*)\\.html",
+      "dest": "/$1.html"
+    },
+    {
+      "src": "/",
+      "dest": "/index.html"
+    },
+    {
+      "src": "/(team|events|gallery|members|recruitment|history|admin|404)",
       "dest": "/$1.html"
     }
   ]
