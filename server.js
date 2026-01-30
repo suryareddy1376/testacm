@@ -100,7 +100,13 @@ app.use((err, req, res, next) => {
     });
 });
 
-app.listen(PORT, () => {
-    console.log(`🚀 KARE ACM SIGBED Server running on http://localhost:${PORT}`);
-    console.log(`📊 Admin Panel: http://localhost:${PORT}/admin`);
-});
+// Only listen when running locally (not on Vercel)
+if (process.env.NODE_ENV !== 'production') {
+    app.listen(PORT, () => {
+        console.log(`🚀 KARE ACM SIGBED Server running on http://localhost:${PORT}`);
+        console.log(`📊 Admin Panel: http://localhost:${PORT}/admin`);
+    });
+}
+
+// Export for Vercel
+module.exports = app;
