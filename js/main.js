@@ -4,6 +4,147 @@ const mobileMenuToggle = document.getElementById('mobileMenuToggle');
 const navLinks = document.getElementById('navLinks');
 const pauseAnnouncementBtn = document.getElementById('pauseAnnouncement');
 
+// ===== Page Loading Handler =====
+const pageLoader = document.querySelector('.page-loader');
+
+function hidePageLoader() {
+    if (pageLoader) {
+        pageLoader.classList.add('hidden');
+        // Remove from DOM after transition
+        setTimeout(() => {
+            if (pageLoader.parentNode) {
+                pageLoader.style.display = 'none';
+            }
+        }, 500);
+    }
+}
+
+// Hide loader when page is fully loaded
+window.addEventListener('load', () => {
+    hidePageLoader();
+});
+
+// Fallback - hide loader after 3 seconds max
+setTimeout(hidePageLoader, 3000);
+
+// ===== Lazy Loading Images =====
+function initLazyLoading() {
+    const lazyImages = document.querySelectorAll('img[data-src]');
+    
+    if ('IntersectionObserver' in window) {
+        const imageObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const img = entry.target;
+                    loadImage(img);
+                    observer.unobserve(img);
+                }
+            });
+        }, {
+            rootMargin: '50px 0px',
+            threshold: 0.01
+        });
+        
+        lazyImages.forEach(img => {
+            img.classList.add('lazy-image');
+            imageObserver.observe(img);
+        });
+    } else {
+        // Fallback for older browsers
+        lazyImages.forEach(img => loadImage(img));
+    }
+}
+
+function loadImage(img) {
+    const src = img.getAttribute('data-src');
+    if (!src) return;
+    
+    img.src = src;
+    img.removeAttribute('data-src');
+    
+    img.onload = () => {
+        img.classList.add('loaded');
+    };
+    
+    img.onerror = () => {
+        img.classList.add('loaded');
+        // Set placeholder on error
+        img.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="300"%3E%3Crect fill="%23f0f0f0" width="400" height="300"/%3E%3Ctext fill="%23999" font-family="sans-serif" font-size="14" x="50%25" y="50%25" text-anchor="middle"%3EImage unavailable%3C/text%3E%3C/svg%3E';
+    };
+}
+
+// Initialize lazy loading
+document.addEventListener('DOMContentLoaded', initLazyLoading);
+
+// ===== Network Status Handler =====
+function updateNetworkStatus() {
+    if (!navigator.onLine) {
+        showToast('You are offline. Some features may be unavailable.', 'warning');
+    }
+}
+
+window.addEventListener('online', () => {
+    showToast('Back online!', 'success');
+});
+
+window.addEventListener('offline', () => {
+    showToast('You are offline.', 'warning');
+});
+
+// ===== Toast Notification System =====
+function showToast(message, type = 'info') {
+    const existingToast = document.querySelector('.toast-notification');
+    if (existingToast) {
+        existingToast.remove();
+    }
+    
+    const toast = document.createElement('div');
+    toast.className = `toast-notification toast-${type}`;
+    toast.innerHTML = `
+        <i class="fas ${type === 'success' ? 'fa-check-circle' : type === 'warning' ? 'fa-exclamation-triangle' : 'fa-info-circle'}"></i>
+        <span>${message}</span>
+    `;
+    
+    // Apply styles
+    Object.assign(toast.style, {
+        position: 'fixed',
+        bottom: '20px',
+        left: '50%',
+        transform: 'translateX(-50%)',
+        background: type === 'success' ? '#27ae60' : type === 'warning' ? '#f39c12' : '#3498db',
+        color: 'white',
+        padding: '12px 24px',
+        borderRadius: '8px',
+        boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
+        display: 'flex',
+        alignItems: 'center',
+        gap: '10px',
+        zIndex: '10000',
+        animation: 'slideUp 0.3s ease'
+    });
+    
+    document.body.appendChild(toast);
+    
+    setTimeout(() => {
+        toast.style.animation = 'slideDown 0.3s ease forwards';
+        setTimeout(() => toast.remove(), 300);
+    }, 3000);
+}
+
+// Add toast animations to page
+const toastStyles = document.createElement('style');
+toastStyles.textContent = `
+    @keyframes slideUp {
+        from { transform: translateX(-50%) translateY(100px); opacity: 0; }
+        to { transform: translateX(-50%) translateY(0); opacity: 1; }
+    }
+    @keyframes slideDown {
+        from { transform: translateX(-50%) translateY(0); opacity: 1; }
+        to { transform: translateX(-50%) translateY(100px); opacity: 0; }
+    }
+`;
+document.head.appendChild(toastStyles);
+
 // ===== Dark Mode Toggle =====
 function toggleDarkMode() {
     document.body.classList.toggle('dark-mode');
@@ -25,15 +166,52 @@ function toggleDarkMode() {
 // Check for saved dark mode preference
 if (localStorage.getItem('darkMode') === 'true') {
     document.body.classList.add('dark-mode');
-    darkModeToggle.innerHTML = '<i class="fas fa-sun"></i> Light';
+    if (darkModeToggle) darkModeToggle.innerHTML = '<i class="fas fa-sun"></i> Light';
 }
 
-darkModeToggle.addEventListener('click', toggleDarkMode);
+if (darkModeToggle) darkModeToggle.addEventListener('click', toggleDarkMode);
 
 // ===== Mobile Menu Toggle =====
-mobileMenuToggle.addEventListener('click', () => {
-    navLinks.classList.toggle('active');
-});
+if (mobileMenuToggle && navLinks) {
+    mobileMenuToggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        navLinks.classList.toggle('active');
+        // Toggle hamburger icon
+        const icon = mobileMenuToggle.querySelector('i');
+        if (navLinks.classList.contains('active')) {
+            icon.classList.remove('fa-bars');
+            icon.classList.add('fa-times');
+            // Prevent body scroll when menu is open
+            document.body.style.overflow = 'hidden';
+        } else {
+            icon.classList.remove('fa-times');
+            icon.classList.add('fa-bars');
+            document.body.style.overflow = '';
+        }
+    });
+    
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+        if (navLinks.classList.contains('active') && 
+            !navLinks.contains(e.target) && 
+            !mobileMenuToggle.contains(e.target)) {
+            navLinks.classList.remove('active');
+            mobileMenuToggle.querySelector('i').classList.remove('fa-times');
+            mobileMenuToggle.querySelector('i').classList.add('fa-bars');
+            document.body.style.overflow = '';
+        }
+    });
+    
+    // Handle escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && navLinks.classList.contains('active')) {
+            navLinks.classList.remove('active');
+            mobileMenuToggle.querySelector('i').classList.remove('fa-times');
+            mobileMenuToggle.querySelector('i').classList.add('fa-bars');
+            document.body.style.overflow = '';
+        }
+    });
+}
 
 // ===== Dropdown Menu Toggle for Mobile =====
 const dropdowns = document.querySelectorAll('.dropdown');
@@ -77,6 +255,9 @@ class Slider {
         this.currentIndex = 0;
         this.autoPlayInterval = options.autoPlay || 5000;
         this.autoPlayTimer = null;
+        this.touchStartX = 0;
+        this.touchEndX = 0;
+        this.minSwipeDistance = 50;
         
         if (this.slides.length > 0) {
             this.init();
@@ -87,6 +268,7 @@ class Slider {
         this.createDots();
         this.startAutoPlay();
         this.setupControls();
+        this.setupTouchEvents();
     }
     
     createDots() {
@@ -108,6 +290,33 @@ class Slider {
         
         if (prevBtn) prevBtn.addEventListener('click', () => this.prevSlide());
         if (nextBtn) nextBtn.addEventListener('click', () => this.nextSlide());
+    }
+    
+    setupTouchEvents() {
+        if (!this.container) return;
+        
+        this.container.addEventListener('touchstart', (e) => {
+            this.touchStartX = e.changedTouches[0].screenX;
+            this.pauseAutoPlay();
+        }, { passive: true });
+        
+        this.container.addEventListener('touchend', (e) => {
+            this.touchEndX = e.changedTouches[0].screenX;
+            this.handleSwipe();
+            this.resetAutoPlay();
+        }, { passive: true });
+    }
+    
+    handleSwipe() {
+        const swipeDistance = this.touchEndX - this.touchStartX;
+        
+        if (Math.abs(swipeDistance) > this.minSwipeDistance) {
+            if (swipeDistance > 0) {
+                this.prevSlide();
+            } else {
+                this.nextSlide();
+            }
+        }
     }
     
     goToSlide(index) {
@@ -135,6 +344,10 @@ class Slider {
     
     startAutoPlay() {
         this.autoPlayTimer = setInterval(() => this.nextSlide(), this.autoPlayInterval);
+    }
+    
+    pauseAutoPlay() {
+        clearInterval(this.autoPlayTimer);
     }
     
     resetAutoPlay() {
@@ -278,6 +491,16 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         e.preventDefault();
         const target = document.querySelector(this.getAttribute('href'));
         if (target) {
+            // Close mobile menu if open
+            if (navLinks && navLinks.classList.contains('active')) {
+                navLinks.classList.remove('active');
+                if (mobileMenuToggle) {
+                    mobileMenuToggle.querySelector('i').classList.remove('fa-times');
+                    mobileMenuToggle.querySelector('i').classList.add('fa-bars');
+                }
+                document.body.style.overflow = '';
+            }
+            
             target.scrollIntoView({
                 behavior: 'smooth',
                 block: 'start'
@@ -286,11 +509,36 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
+// ===== Debounce utility for scroll events =====
+function debounce(func, wait = 10) {
+    let timeout;
+    return function executedFunction(...args) {
+        const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
+}
+
+// ===== Throttle utility for scroll events =====
+function throttle(func, limit = 100) {
+    let inThrottle;
+    return function(...args) {
+        if (!inThrottle) {
+            func.apply(this, args);
+            inThrottle = true;
+            setTimeout(() => inThrottle = false, limit);
+        }
+    };
+}
+
 // ===== Active Navigation Link on Scroll =====
 const sections = document.querySelectorAll('section[id]');
 const navItems = document.querySelectorAll('.nav-links a');
 
-function highlightNavOnScroll() {
+const highlightNavOnScroll = throttle(() => {
     const scrollY = window.pageYOffset;
     
     sections.forEach(section => {
@@ -307,42 +555,91 @@ function highlightNavOnScroll() {
             });
         }
     });
-}
+}, 100);
 
-window.addEventListener('scroll', highlightNavOnScroll);
+window.addEventListener('scroll', highlightNavOnScroll, { passive: true });
 
 // ===== Navbar Background on Scroll =====
 const mainNav = document.querySelector('.main-nav');
 
-window.addEventListener('scroll', () => {
-    if (window.scrollY > 50) {
-        mainNav.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.15)';
-    } else {
-        mainNav.style.boxShadow = 'var(--shadow)';
+const handleNavScroll = throttle(() => {
+    if (mainNav) {
+        if (window.scrollY > 50) {
+            mainNav.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.15)';
+        } else {
+            mainNav.style.boxShadow = 'var(--shadow)';
+        }
     }
-});
+}, 50);
 
-// ===== Animation on Scroll =====
-function animateOnScroll() {
-    const elements = document.querySelectorAll('.offer-card, .representative-card, .about-card, .partner-link');
+window.addEventListener('scroll', handleNavScroll, { passive: true });
+
+// ===== Animation on Scroll with Intersection Observer =====
+function initScrollAnimations() {
+    const animatedElements = document.querySelectorAll('.offer-card, .representative-card, .about-card, .partner-link, .team-card');
     
-    elements.forEach(element => {
-        const elementTop = element.getBoundingClientRect().top;
-        const elementVisible = 150;
+    if ('IntersectionObserver' in window) {
+        // Set initial styles
+        animatedElements.forEach(element => {
+            element.style.opacity = '0';
+            element.style.transform = 'translateY(20px)';
+            element.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+        });
         
-        if (elementTop < window.innerHeight - elementVisible) {
+        const animationObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                    animationObserver.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        });
+        
+        animatedElements.forEach(element => animationObserver.observe(element));
+    } else {
+        // Fallback - show all elements immediately
+        animatedElements.forEach(element => {
             element.style.opacity = '1';
             element.style.transform = 'translateY(0)';
-        }
-    });
+        });
+    }
 }
 
-// Initial styles for animation
-document.querySelectorAll('.offer-card, .representative-card, .about-card, .partner-link').forEach(element => {
-    element.style.opacity = '0';
-    element.style.transform = 'translateY(20px)';
-    element.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-});
+// Initialize animations
+document.addEventListener('DOMContentLoaded', initScrollAnimations);
 
-window.addEventListener('scroll', animateOnScroll);
+// ===== Handle resize events =====
+const handleResize = debounce(() => {
+    // Close mobile menu on resize to desktop
+    if (window.innerWidth > 768 && navLinks && navLinks.classList.contains('active')) {
+        navLinks.classList.remove('active');
+        if (mobileMenuToggle) {
+            mobileMenuToggle.querySelector('i').classList.remove('fa-times');
+            mobileMenuToggle.querySelector('i').classList.add('fa-bars');
+        }
+        document.body.style.overflow = '';
+    }
+}, 150);
+
+window.addEventListener('resize', handleResize, { passive: true });
+
+// ===== Visibility API - pause animations when tab not visible =====
+document.addEventListener('visibilitychange', () => {
+    const tickerContent = document.querySelector('.ticker-content');
+    if (document.hidden) {
+        // Page is hidden - pause animations to save resources
+        if (tickerContent) tickerContent.style.animationPlayState = 'paused';
+        if (heroSlider) heroSlider.pauseAutoPlay();
+    } else {
+        // Page is visible - resume animations
+        if (tickerContent && !tickerContent.classList.contains('paused')) {
+            tickerContent.style.animationPlayState = 'running';
+        }
+        if (heroSlider) heroSlider.resetAutoPlay();
+    }
+});
 window.addEventListener('load', animateOnScroll);

@@ -2,44 +2,51 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#003366">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
     <title>Events | KARE ACM SIGBED Student Chapter</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="dns-prefetch" href="https://karesgbd.acm.org">
     <style>
         .events-hero {
             background: linear-gradient(135deg, rgba(0, 48, 87, 0.9), rgba(0, 102, 204, 0.8)),
                         url('https://karesgbd.acm.org/images/bg-pattern.png');
-            padding: 120px 0 80px;
+            padding: clamp(80px, 12vw, 120px) 0 clamp(50px, 8vw, 80px);
             text-align: center;
             color: white;
         }
         
         .events-hero h1 {
-            font-size: 3rem;
+            font-size: clamp(1.8rem, 5vw, 3rem);
             margin-bottom: 15px;
         }
         
         .events-hero p {
-            font-size: 1.2rem;
+            font-size: clamp(0.9rem, 3vw, 1.2rem);
             opacity: 0.9;
         }
 
         .events-section {
-            padding: 80px 0;
+            padding: clamp(40px, 8vw, 80px) 0;
         }
 
         .events-filter {
             display: flex;
             justify-content: center;
-            gap: 15px;
+            gap: 10px;
             margin-bottom: 40px;
             flex-wrap: wrap;
+            padding: 0 15px;
         }
 
         .filter-btn {
-            padding: 10px 25px;
+            padding: 8px 20px;
             border: 2px solid var(--secondary-color);
             background: transparent;
             color: var(--secondary-color);
@@ -47,6 +54,7 @@
             cursor: pointer;
             font-weight: 500;
             transition: var(--transition);
+            font-size: clamp(0.8rem, 2.5vw, 1rem);
         }
 
         .filter-btn:hover,

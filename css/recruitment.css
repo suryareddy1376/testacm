@@ -368,9 +368,36 @@ body.dark-mode .contact-card h4 {
 }
 
 /* Responsive Styles */
+@media (max-width: 992px) {
+    .info-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .timeline-item {
+        width: 180px;
+    }
+}
+
 @media (max-width: 768px) {
+    .recruitment-hero {
+        padding: clamp(50px, 10vw, 80px) 0;
+    }
+    
     .recruitment-hero h1 {
-        font-size: 1.8rem;
+        font-size: clamp(1.5rem, 5vw, 1.8rem);
+    }
+    
+    .recruitment-hero h1 i {
+        margin-right: 10px;
+    }
+    
+    .recruitment-hero p {
+        font-size: clamp(0.9rem, 3vw, 1.1rem);
+    }
+    
+    .status-badge {
+        padding: 10px 20px;
+        font-size: 0.9rem;
     }
     
     .timeline-item:not(:last-child)::after {
@@ -382,11 +409,94 @@ body.dark-mode .contact-card h4 {
         align-items: center;
     }
     
+    .timeline-item {
+        width: 100%;
+        max-width: 280px;
+    }
+    
     .form-container {
-        padding: 25px;
+        padding: 20px;
+        margin: 0 15px;
     }
     
     .form-row {
         grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    .info-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .info-card {
+        padding: 25px;
+    }
+    
+    .info-icon {
+        width: 50px;
+        height: 50px;
+        font-size: 1.3rem;
+    }
+    
+    .recruitment-info,
+    .timeline-section,
+    .application-section {
+        padding: clamp(40px, 8vw, 60px) 0;
+    }
+    
+    .contact-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .recruitment-hero h1 {
+        font-size: 1.3rem;
+    }
+    
+    .form-container {
+        padding: 15px;
+    }
+    
+    .form-group label {
+        font-size: 0.9rem;
+    }
+    
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        padding: 12px;
+        font-size: 16px; /* Prevents zoom on iOS */
+    }
+    
+    .submit-btn {
+        padding: 14px 30px;
+        font-size: 1rem;
+    }
+    
+    .info-card h3 {
+        font-size: 1.1rem;
+    }
+    
+    .info-card li {
+        font-size: 0.9rem;
+    }
+}
+
+/* Touch device optimizations */
+@media (pointer: coarse) {
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        min-height: 48px;
+    }
+    
+    .submit-btn {
+        min-height: 48px;
+    }
+    
+    .status-badge {
+        min-height: 44px;
     }
 }
